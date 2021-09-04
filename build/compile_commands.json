@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/kdog/Code/gcc/showpic/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-9   -I/home/kdog/Code/gcc/showpic/showpic -I/usr/include/SDL2 -I/home/kdog/Code/gcc/showpic/include  -g   -o CMakeFiles/showpic.dir/src/main.cpp.o -c /home/kdog/Code/gcc/showpic/src/main.cpp",
+  "file": "/home/kdog/Code/gcc/showpic/src/main.cpp"
+},
+{
+  "directory": "/home/kdog/Code/gcc/showpic/build",
+  "command": "/usr/bin/x86_64-linux-gnu-g++-9   -I/home/kdog/Code/gcc/showpic/showpic -I/usr/include/SDL2 -I/home/kdog/Code/gcc/showpic/include  -g   -o CMakeFiles/showpic.dir/src/picwindow.cpp.o -c /home/kdog/Code/gcc/showpic/src/picwindow.cpp",
+  "file": "/home/kdog/Code/gcc/showpic/src/picwindow.cpp"
+}
+]

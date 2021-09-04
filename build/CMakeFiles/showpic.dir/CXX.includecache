@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/picwindow.h
+SDL2/SDL.h
+-
+stdio.h
+-
+
+/home/kdog/Code/gcc/showpic/src/main.cpp
+SDL2/SDL.h
+-
+stdio.h
+-
+picwindow.h
+/home/kdog/Code/gcc/showpic/src/picwindow.h
+
+/home/kdog/Code/gcc/showpic/src/picwindow.cpp
+picwindow.h
+/home/kdog/Code/gcc/showpic/src/picwindow.h
+
