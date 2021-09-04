@@ -27,7 +27,7 @@ void Picwindow::showpic() {
 	SDL_UpdateWindowSurface( picWindow );
     SDL_Delay( 5000 );
 }
-void Picwindow::closepic() 		{
+void Picwindow::closepic() {
 	bool quit = false;
 	SDL_Event e;
 	while( !quit ) {
