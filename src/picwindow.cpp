@@ -1,7 +1,6 @@
 #include "picwindow.h"
 
-Picwindow::Picwindow()
-{
+Picwindow::Picwindow() {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("SDL_Error: %s\n", SDL_GetError());
@@ -20,45 +19,38 @@ Picwindow::Picwindow()
 		}
 	}
 }
-Picwindow::~Picwindow()
-{
+Picwindow::~Picwindow() {
 	SDL_FreeSurface(mHelloWorld);
 	mHelloWorld = NULL;
 	SDL_DestroyWindow(mWindow);
 	mWindow = NULL;
 	SDL_Quit();
 }
-void Picwindow::loadpics()
-{
+void Picwindow::loadpics() {
 	char file[] = "../data/hello_world.bmp";
 	mHelloWorld = SDL_LoadBMP(file);
-	if (mHelloWorld == NULL)
-	{
-		printf("can't load image %s! SDL Error: %s\n", file, SDL_GetError());
-	}
 	mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = this->loadSurface("../data/default.bmp");
 	mKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = this->loadSurface("../data/up.bmp");
 	mKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = this->loadSurface("../data/down.bmp");
 	mKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = this->loadSurface("../data/left.bmp");
 	mKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = this->loadSurface("../data/right.bmp");
 }
-SDL_Surface *Picwindow::loadSurface(std::string path)
-{
-	SDL_Surface *loadedSurface = SDL_LoadBMP(path.c_str());
-	if (loadedSurface == NULL)
-	{
-		printf("Can't load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+SDL_Surface *Picwindow::loadSurface(std::string path) {
+	SDL_Surface* systemSurface;
+	SDL_Surface* opaqueSurface = SDL_LoadBMP(path.c_str());
+	if (opaqueSurface == NULL) { printf("Can't load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError()); }
+	else {  // format to screen
+		systemSurface = SDL_ConvertSurface(opaqueSurface, mScreenSurface->format, 0);
+		SDL_FreeSurface(opaqueSurface);
 	}
-	return loadedSurface;
+	return systemSurface;
 }
-void Picwindow::showpic()
-{
+void Picwindow::showpic() {
 	SDL_BlitSurface(mHelloWorld, NULL, mScreenSurface, NULL);
 	SDL_UpdateWindowSurface(mWindow);
 	//SDL_Delay( 5000 );
 }
-void Picwindow::events()
-{
+void Picwindow::events() {
 	bool quit = false;
 	SDL_Event e;
 	while (!quit)
@@ -85,8 +77,10 @@ void Picwindow::events()
 				case SDLK_RIGHT:
 					mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
 					break;
-				default:
+				case SDLK_HOME:
 					mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+					break;					
+				default:
 					break;
 				}
 			}
