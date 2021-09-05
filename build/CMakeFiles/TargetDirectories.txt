@@ -1,3 +1,0 @@
-/home/kdog/Code/gcc/showpic/build/CMakeFiles/rebuild_cache.dir
-/home/kdog/Code/gcc/showpic/build/CMakeFiles/edit_cache.dir
-/home/kdog/Code/gcc/showpic/build/CMakeFiles/showpic.dir
