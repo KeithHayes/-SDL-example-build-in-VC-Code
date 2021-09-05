@@ -51,7 +51,7 @@ void Picwindow::showpic() {
 	SDL_BlitSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT], NULL, mScreenSurface, NULL);
 	SDL_UpdateWindowSurface(mWindow);
 }
-SDL_Surface* Picwindow::largepic() {
+SDL_Surface* Picwindow::clippic() {
 	SDL_Surface* largesurface = this->loadSurface("../data/forest1280.bmp");
 	mSmallSurface = this->loadSurface("../data/default.bmp");
 	SDL_Rect stretchRect;
@@ -59,12 +59,22 @@ SDL_Surface* Picwindow::largepic() {
 	stretchRect.y = 240;
 	stretchRect.w = SCREEN_WIDTH;
 	stretchRect.h = SCREEN_HEIGHT;
-	SDL_BlitScaled( largesurface, &stretchRect, mSmallSurface, NULL );
-	//SDL_BlitScaled( largesurface, NULL, mSmallSurface, NULL );
+	SDL_BlitScaled(largesurface, &stretchRect, mSmallSurface, NULL);
+	//SDL_BlitScaled( largesurface, NULL, mSmallSurface, NULL);
 	SDL_FreeSurface(largesurface);
 	return mSmallSurface;
-	//SDL_Delay( 5000 );
 }
+SDL_Surface* Picwindow::zoompic() {
+	SDL_Surface* smallSurface = this->loadSurface("../data/forest320.bmp");
+	SDL_Rect stretchRect;
+	stretchRect.x = 0;
+	stretchRect.y = 0;
+	stretchRect.w = SCREEN_WIDTH;
+	stretchRect.h = SCREEN_HEIGHT;
+	SDL_BlitScaled(smallSurface, NULL, mSmallSurface, &stretchRect);
+	return mSmallSurface;
+}
+
 void Picwindow::events() {
 	bool quit = false;
 	SDL_Event e;
@@ -92,8 +102,11 @@ void Picwindow::events() {
 					case SDLK_HOME:
 						mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
 					break;
-					case SDLK_TAB:
-						mCurrentSurface = largepic();
+					case SDLK_PAGEUP:
+						mCurrentSurface = zoompic();
+					break;
+					case SDLK_PAGEDOWN:
+						mCurrentSurface = clippic();
 					break;				
 					default:
 					break;

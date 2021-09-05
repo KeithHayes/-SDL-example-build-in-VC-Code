@@ -27,7 +27,9 @@ public:
     void showpic();
     void events();
     SDL_Surface* loadSurface( std::string path);
-    SDL_Surface* largepic();
+    SDL_Surface* clippic();
+    SDL_Surface* zoompic();
+    void stretch();
 
 
 private:
