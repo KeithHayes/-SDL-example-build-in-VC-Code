@@ -5,8 +5,8 @@
 int main( int argc, char* args[] )
 {
 	Picwindow mywin;
-	mywin.loadpic();
+	mywin.loadpics();
 	mywin.showpic();
-	mywin.closepic();
+	mywin.events();
 	return 0;
 }

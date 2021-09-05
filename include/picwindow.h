@@ -3,6 +3,17 @@
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
+#include <string>
+
+enum KeyPressSurfaces
+{
+	KEY_PRESS_SURFACE_DEFAULT,
+	KEY_PRESS_SURFACE_UP,
+	KEY_PRESS_SURFACE_DOWN,
+	KEY_PRESS_SURFACE_LEFT,
+	KEY_PRESS_SURFACE_RIGHT,
+	KEY_PRESS_SURFACE_TOTAL
+};
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -12,14 +23,19 @@ class Picwindow
 public:
     Picwindow();
     ~Picwindow();
-    void loadpic();
+    void loadpics();
     void showpic();
-    void closepic();
+    void events();
+    SDL_Surface* loadSurface( std::string path);
+
 
 private:
-    SDL_Window* picWindow;
-    SDL_Surface* picScreenSurface;
-    SDL_Surface* picHelloWorld;
+    SDL_Window* mWindow;
+    SDL_Surface* mScreenSurface;
+    SDL_Surface* mHelloWorld;
+    SDL_Surface* mKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
+    SDL_Surface* mCurrentSurface;
+
 };
 
 #endif // PICWINDOW_H
