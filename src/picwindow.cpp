@@ -25,6 +25,8 @@ Picwindow::~Picwindow() {
 	SDL_FreeSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN]);
 	SDL_FreeSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT]);
 	SDL_FreeSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT]);
+	SDL_FreeSurface(mScreenSurface);
+	SDL_FreeSurface(mCurrentSurface);
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();
 }
@@ -48,15 +50,20 @@ SDL_Surface *Picwindow::loadSurface(std::string path) {
 void Picwindow::showpic() {
 	SDL_BlitSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT], NULL, mScreenSurface, NULL);
 	SDL_UpdateWindowSurface(mWindow);
-	//SDL_Delay( 5000 );
 }
-void Picwindow::stretch() {
+SDL_Surface* Picwindow::largepic() {
+	SDL_Surface* largesurface = this->loadSurface("../data/forest1280.bmp");
+	mSmallSurface = this->loadSurface("../data/default.bmp");
 	SDL_Rect stretchRect;
-	stretchRect.x = 500;
-	stretchRect.y = 500;
+	stretchRect.x = 320;
+	stretchRect.y = 240;
 	stretchRect.w = SCREEN_WIDTH;
 	stretchRect.h = SCREEN_HEIGHT;
-	
+	SDL_BlitScaled( largesurface, &stretchRect, mSmallSurface, NULL );
+	//SDL_BlitScaled( largesurface, NULL, mSmallSurface, NULL );
+	SDL_FreeSurface(largesurface);
+	return mSmallSurface;
+	//SDL_Delay( 5000 );
 }
 void Picwindow::events() {
 	bool quit = false;
@@ -86,7 +93,7 @@ void Picwindow::events() {
 						mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
 					break;
 					case SDLK_TAB:
-						stretch();
+						mCurrentSurface = largepic();
 					break;				
 					default:
 					break;

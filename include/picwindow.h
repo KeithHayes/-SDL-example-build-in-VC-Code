@@ -25,18 +25,17 @@ public:
     ~Picwindow();
     void loadpics();
     void showpic();
-    void stretch();
     void events();
     SDL_Surface* loadSurface( std::string path);
+    SDL_Surface* largepic();
 
 
 private:
     SDL_Window* mWindow;
     SDL_Surface* mScreenSurface;
-    SDL_Surface* mHelloWorld;
     SDL_Surface* mKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
     SDL_Surface* mCurrentSurface;
-
+    SDL_Surface* mSmallSurface;
 };
 
 #endif // PICWINDOW_H
