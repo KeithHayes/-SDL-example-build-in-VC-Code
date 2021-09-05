@@ -25,6 +25,7 @@ public:
     ~Picwindow();
     void loadpics();
     void showpic();
+    void stretch();
     void events();
     SDL_Surface* loadSurface( std::string path);
 

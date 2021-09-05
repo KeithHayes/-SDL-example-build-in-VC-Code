@@ -20,15 +20,15 @@ Picwindow::Picwindow() {
 	}
 }
 Picwindow::~Picwindow() {
-	SDL_FreeSurface(mHelloWorld);
-	mHelloWorld = NULL;
+	SDL_FreeSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT]);
+	SDL_FreeSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_UP]);
+	SDL_FreeSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN]);
+	SDL_FreeSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT]);
+	SDL_FreeSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT]);
 	SDL_DestroyWindow(mWindow);
-	mWindow = NULL;
 	SDL_Quit();
 }
 void Picwindow::loadpics() {
-	char file[] = "../data/hello_world.bmp";
-	mHelloWorld = SDL_LoadBMP(file);
 	mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = this->loadSurface("../data/default.bmp");
 	mKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = this->loadSurface("../data/up.bmp");
 	mKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = this->loadSurface("../data/down.bmp");
@@ -46,43 +46,54 @@ SDL_Surface *Picwindow::loadSurface(std::string path) {
 	return systemSurface;
 }
 void Picwindow::showpic() {
-	SDL_BlitSurface(mHelloWorld, NULL, mScreenSurface, NULL);
+	SDL_BlitSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT], NULL, mScreenSurface, NULL);
 	SDL_UpdateWindowSurface(mWindow);
 	//SDL_Delay( 5000 );
+}
+void Picwindow::stretch() {
+	SDL_Rect stretchRect;
+	stretchRect.x = 500;
+	stretchRect.y = 500;
+	stretchRect.w = SCREEN_WIDTH;
+	stretchRect.h = SCREEN_HEIGHT;
+	
 }
 void Picwindow::events() {
 	bool quit = false;
 	SDL_Event e;
-	while (!quit)
-	{
-		while (SDL_PollEvent(&e) != 0)
-		{
-			if (e.type == SDL_QUIT)
-			{
-				quit = true;
-			}
-			else if (e.type == SDL_KEYDOWN)
-			{
-				switch (e.key.keysym.sym) // switch on key press
-				{
-				case SDLK_UP:
-					mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
+	while (!quit) {
+		while (SDL_PollEvent(&e) != 0) {
+			switch (e.type) {
+				case SDL_QUIT:
+					quit = true;
+				break;
+				case SDL_KEYDOWN:
+					switch (e.key.keysym.sym) // switch on key press
+					{
+					case SDLK_UP:
+						mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
 					break;
-				case SDLK_DOWN:
-					mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
+					case SDLK_DOWN:
+						mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
 					break;
-				case SDLK_LEFT:
-					mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
+					case SDLK_LEFT:
+						mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
 					break;
-				case SDLK_RIGHT:
-					mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
+					case SDLK_RIGHT:
+						mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
 					break;
-				case SDLK_HOME:
-					mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
-					break;					
-				default:
+					case SDLK_HOME:
+						mCurrentSurface = mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+					break;
+					case SDLK_TAB:
+						stretch();
+					break;				
+					default:
 					break;
 				}
+				break;
+				case SDL_KEYUP:
+				break;
 			}
 		}
 		SDL_BlitSurface(mCurrentSurface, NULL, mScreenSurface, NULL);
