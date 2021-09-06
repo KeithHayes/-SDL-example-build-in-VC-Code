@@ -3,7 +3,7 @@ project(showpic VERSION 1.0)
 
 find_package(SDL2 REQUIRED)
 include_directories(showpic ${SDL2_INCLUDE_DIRS})
-include_directories(include)
+include_directories(inc)
 file(GLOB SOURCES "src/*.cpp")
 
 add_executable(showpic ${SOURCES})

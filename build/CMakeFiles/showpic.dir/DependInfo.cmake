@@ -13,7 +13,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../showpic"
   "/usr/include/SDL2"
-  "../include"
+  "../inc"
   )
 
 # Targets to which this target links.
