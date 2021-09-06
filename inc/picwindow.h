@@ -42,6 +42,8 @@ private:
     SDL_Surface* mKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
     SDL_Surface* mCurrentSurface;
     SDL_Surface* mLoadedSurface;
+    SDL_Renderer* mRenderer;
+    SDL_Texture* mTexture;
 };
 
 #endif // PICWINDOW_H
