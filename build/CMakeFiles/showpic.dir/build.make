@@ -94,6 +94,8 @@ showpic_EXTERNAL_OBJECTS =
 showpic: CMakeFiles/showpic.dir/src/main.cpp.o
 showpic: CMakeFiles/showpic.dir/src/picwindow.cpp.o
 showpic: CMakeFiles/showpic.dir/build.make
+showpic: /usr/lib/x86_64-linux-gnu/libSDL2_image.so
+showpic: /usr/lib/x86_64-linux-gnu/libSDL2.so
 showpic: CMakeFiles/showpic.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kdog/Code/gcc/showpic/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable showpic"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/showpic.dir/link.txt --verbose=$(VERBOSE)

@@ -9,6 +9,8 @@
 ../inc/picwindow.h
 SDL2/SDL.h
 -
+SDL2/SDL_image.h
+-
 stdio.h
 -
 string

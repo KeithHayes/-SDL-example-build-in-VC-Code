@@ -1,21 +1,18 @@
 #include "picwindow.h"
 
 Picwindow::Picwindow() {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		printf("SDL_Error: %s\n", SDL_GetError());
-	}
-	else
-	{
-		mWindow = SDL_CreateWindow("SDL Debug Test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) { printf("SDL_Error: %s\n", SDL_GetError()); }
+	else {
+		mWindow = SDL_CreateWindow("SDL Debug C++", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 								   SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (mWindow == NULL)
-		{
-			printf("SDL_Error: %s\n", SDL_GetError());
-		}
-		else
-		{
-			mScreenSurface = SDL_GetWindowSurface(mWindow);
+		if (mWindow == NULL) { printf("SDL_Error: %s\n", SDL_GetError()); }
+		else {
+			int imgFlags = IMG_INIT_PNG;
+			if( !( IMG_Init( imgFlags ) & imgFlags ) ) {
+                printf( "SDL_image Error: %s\n", IMG_GetError() ); } 
+			else {
+                mScreenSurface = SDL_GetWindowSurface( mWindow );
+            }
 		}
 	}
 }
@@ -51,8 +48,8 @@ void Picwindow::showpic() {
 	SDL_UpdateWindowSurface(mWindow);
 }
 SDL_Surface* Picwindow::clippic() {
-	SDL_Surface* largesurface = this->loadSurface("../data/forest1280.bmp");
 	mLoadedSurface = this->loadSurface("../data/default.bmp");
+	SDL_Surface* largesurface = this->loadSurface("../data/forest1280.bmp");
 	SDL_Rect stretchRect;
 	stretchRect.x = 320;
 	stretchRect.y = 240;
@@ -64,16 +61,20 @@ SDL_Surface* Picwindow::clippic() {
 	return mLoadedSurface;
 }
 SDL_Surface* Picwindow::zoompic() {
-	SDL_Surface* smallSurface = this->loadSurface("../data/forest320.bmp");
+	mLoadedSurface = this->loadSurface("../data/default.bmp");
+	SDL_Surface* smallSurface = IMG_Load("../data/forest320.png");
+	SDL_Surface* systemSurface = SDL_ConvertSurface(smallSurface, mScreenSurface->format, 0);
 	SDL_Rect stretchRect;
 	stretchRect.x = 0;
 	stretchRect.y = 0;
 	stretchRect.w = SCREEN_WIDTH;
 	stretchRect.h = SCREEN_HEIGHT;
-	SDL_BlitScaled(smallSurface, NULL, mLoadedSurface, &stretchRect);
+	SDL_BlitScaled(systemSurface, NULL, mLoadedSurface, &stretchRect);
 	SDL_FreeSurface(smallSurface);
+	SDL_FreeSurface(systemSurface);
 	return mLoadedSurface;
 }
+
 
 void Picwindow::events() {
 	bool quit = false;
@@ -108,7 +109,7 @@ void Picwindow::events() {
 					case SDLK_PAGEDOWN:
 						mCurrentSurface = clippic();
 					break;				
-					default:largesurface
+					default:
 					break;
 				}
 				break;
