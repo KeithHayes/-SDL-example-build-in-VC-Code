@@ -27,15 +27,15 @@ Picwindow::~Picwindow() {
 	SDL_Quit();
 }
 void Picwindow::loadpics() {
-	mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = this->loadSurface("../data/default.bmp");
-	mKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = this->loadSurface("../data/up.bmp");
-	mKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = this->loadSurface("../data/down.bmp");
-	mKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = this->loadSurface("../data/left.bmp");
-	mKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = this->loadSurface("../data/right.bmp");
+	mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = this->loadSurface("data/default.png");
+	mKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = this->loadSurface("data/up.png");
+	mKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = this->loadSurface("data/down.png");
+	mKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = this->loadSurface("data/left.png");
+	mKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = this->loadSurface("data/right.png");
 }
 SDL_Surface *Picwindow::loadSurface(std::string path) {
 	SDL_Surface* systemSurface;
-	SDL_Surface* opaqueSurface = SDL_LoadBMP(path.c_str());
+	SDL_Surface* opaqueSurface = IMG_Load(path.c_str());
 	if (opaqueSurface == NULL) { printf("Can't load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError()); }
 	else {  // format to screen
 		systemSurface = SDL_ConvertSurface(opaqueSurface, mScreenSurface->format, 0);
@@ -48,8 +48,8 @@ void Picwindow::showpic() {
 	SDL_UpdateWindowSurface(mWindow);
 }
 SDL_Surface* Picwindow::clippic() {
-	mLoadedSurface = this->loadSurface("../data/default.bmp");
-	SDL_Surface* largesurface = this->loadSurface("../data/forest1280.bmp");
+	mLoadedSurface = IMG_Load("data/default.png");
+	SDL_Surface* largesurface = IMG_Load("data/forest1280.png");
 	SDL_Rect stretchRect;
 	stretchRect.x = 320;
 	stretchRect.y = 240;
@@ -61,8 +61,8 @@ SDL_Surface* Picwindow::clippic() {
 	return mLoadedSurface;
 }
 SDL_Surface* Picwindow::zoompic() {
-	mLoadedSurface = this->loadSurface("../data/default.bmp");
-	SDL_Surface* smallSurface = IMG_Load("../data/forest320.png");
+	mLoadedSurface = IMG_Load("data/default.png");
+	SDL_Surface* smallSurface = IMG_Load("data/forest320.png");
 	SDL_Surface* systemSurface = SDL_ConvertSurface(smallSurface, mScreenSurface->format, 0);
 	SDL_Rect stretchRect;
 	stretchRect.x = 0;
@@ -74,7 +74,6 @@ SDL_Surface* Picwindow::zoompic() {
 	SDL_FreeSurface(systemSurface);
 	return mLoadedSurface;
 }
-
 
 void Picwindow::events() {
 	bool quit = false;

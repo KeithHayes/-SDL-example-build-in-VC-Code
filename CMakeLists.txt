@@ -10,6 +10,6 @@ find_package(SDL2 REQUIRED)
 include(FindPkgConfig)
 pkg_check_modules(SDL2_Image REQUIRED IMPORTED_TARGET SDL2_image)
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME}.out ${SOURCES})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} PkgConfig::SDL2_Image)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME}.out PkgConfig::SDL2_Image)
