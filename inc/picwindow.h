@@ -34,7 +34,7 @@ public:
     SDL_Surface* clippic();
     SDL_Surface* zoompic();
     void stretch();
-
+    void textureLoad();
 
 private:
     SDL_Window* mWindow;

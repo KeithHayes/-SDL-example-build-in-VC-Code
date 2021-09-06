@@ -34,14 +34,10 @@ void Picwindow::loadpics() {
 	mKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = this->loadSurface("data/right.png");
 }
 SDL_Surface *Picwindow::loadSurface(std::string path) {
-	SDL_Surface* systemSurface;
 	SDL_Surface* opaqueSurface = IMG_Load(path.c_str());
-	if (opaqueSurface == NULL) { printf("Can't load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError()); }
-	else {  // format to screen
-		systemSurface = SDL_ConvertSurface(opaqueSurface, mScreenSurface->format, 0);
-		SDL_FreeSurface(opaqueSurface);
-	}
-	return systemSurface;
+	mLoadedSurface = SDL_ConvertSurface(opaqueSurface, mScreenSurface->format, 0);
+	SDL_FreeSurface(opaqueSurface);
+	return mLoadedSurface;
 }
 void Picwindow::showpic() {
 	SDL_BlitSurface(mKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT], NULL, mScreenSurface, NULL);
@@ -73,6 +69,11 @@ SDL_Surface* Picwindow::zoompic() {
 	SDL_FreeSurface(smallSurface);
 	SDL_FreeSurface(systemSurface);
 	return mLoadedSurface;
+}
+void Picwindow::textureLoad() {
+	
+
+	
 }
 
 void Picwindow::events() {
@@ -107,7 +108,10 @@ void Picwindow::events() {
 					break;
 					case SDLK_PAGEDOWN:
 						mCurrentSurface = clippic();
-					break;				
+					break;
+					case SDLK_END:
+						textureLoad();
+					break;						
 					default:
 					break;
 				}
