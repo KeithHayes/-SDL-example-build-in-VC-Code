@@ -71,11 +71,9 @@ SDL_Surface* Picwindow::zoompic() {
 	return mLoadedSurface;
 }
 void Picwindow::textureLoad() {
-	mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
-	mLoadedSurface = IMG_Load("data/forest1920.jpeg");
-	mTexture = SDL_CreateTextureFromSurface(mRenderer, mLoadedSurface);
-
-
+	//mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
+	//mLoadedSurface = IMG_Load("data/forest1920.jpeg");
+	//mTexture = SDL_CreateTextureFromSurface(mRenderer, mLoadedSurface);
 }
 
 void Picwindow::events() {
